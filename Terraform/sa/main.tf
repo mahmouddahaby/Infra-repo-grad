@@ -17,3 +17,13 @@ resource "google_project_iam_member" "gke_sa" {
   member  = "serviceAccount:${google_service_account.custom_gke_sa.email}"
   project = var.project
 }
+resource "google_project_iam_member" "gke_storage_sa" {
+  role    = "roles/storage.admin"
+  member  = "serviceAccount:${google_service_account.custom_gke_sa.email}"
+  project = var.project
+}
+resource "google_project_iam_member" "gke_object_sa" {
+  role    = "roles/storage.objectAdmin"
+  member  = "serviceAccount:${google_service_account.custom_gke_sa.email}"
+  project = var.project
+}
