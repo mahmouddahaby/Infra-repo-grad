@@ -1,17 +1,7 @@
+# Deploy backend application on K8S cluster using CI/CD jenkins pipline
+## Project Requirement
 
-
-
-# GCP_IaC_DevOps_Demo
-
-![Automating_GCP_to_Launch_VM_Instance_with_Terraform_website-1900x600](https://user-images.githubusercontent.com/99130650/219879620-99bdde53-ad8f-4333-9ccd-68fd0ec9387b.jpg)
-
-![1_ULTrpcDXmxVp1PjG7VAOJw](https://user-images.githubusercontent.com/99130650/219879698-8536777a-efeb-444a-b70a-28f406775f53.png)
-
-## Project Specifications 
-![Screenshot from 2023-02-09 16-36-49](https://user-images.githubusercontent.com/103090890/217843113-dfda4ec4-7907-4f64-9716-27296ea589fa.png)
-
-#### This infrastructure deploys a counter app  
-#### Note : All Secrets And authentication must be done by you for security reasons 
+![Alternative Image](./Pics/overview.png)
 
 -----------------------------
 
@@ -81,7 +71,27 @@ kubectl get all
 
 
 ------------------------------------
-Jenkins file
+### Jenkins file
+
+  ```
+- run `Kubectl get svc -n devops-tools` to get jenkins ip
+- run `Kubectl exec -it po/jenkins-agent-<tail: pod name> -n devops-tools -- bash` to enter jenkins agent shell
+- run `passwd jenkins` to make a password for the jenkins user
+- run `chmod 666 /var/run/docker.sock` to make docker available to jenkins user
+- run `service ssh start` to be able to connect to the agent
+- run these command to install gcloud cli
+
+  ```
+  echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+  curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+  apt-get update && apt-get install google-cloud-cli
+  apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+  ```
+
+- run `su - jenkins` to switch to jenkins user
+- run `gcloud auth configure-docker` to allow docker push to your priavte gcr
+- run `gcloud container clusters get-credentials my-gke --region <your region> --project <your project name>` to generate kubeconfig file
+- now with the password we created for the jenkins user add the jenkins agent to the list of jenkins node to be able to use it
 
 This pipeline has three stages: Terraform Init, Terraform Plan, and Terraform Apply. The Terraform Init stage initializes Terraform, the Terraform Plan stage generates an execution plan for the infrastructure, and the Terraform Apply stage applies the execution plan to create the infrastructure on GCP.
 
