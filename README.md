@@ -1,7 +1,7 @@
 # Deploy backend application on K8S cluster using CI/CD jenkins pipline
 ## Project Requirement
 
-![Alternative Image](./Pics/overview.png)
+![overview](https://user-images.githubusercontent.com/99130650/220208892-c15e032a-8c96-4ea1-9731-e40c6edd0f00.png)
 
 -----------------------------
 
