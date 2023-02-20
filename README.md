@@ -101,7 +101,7 @@ The post section of the pipeline includes a Terraform destroy command, which ens
 Remember, to run this pipeline, you will need to configure your GCP personal credentials locally on the Jenkins master machine. You can do this by following the GCP documentation on setting up authentication for your environment.
 
 
-#Thank you
+Thank you
 
 
 
